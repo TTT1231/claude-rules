@@ -1,0 +1,25 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/npm/cspell-eslint@latest/dist/cspell-eslint.schema.json",
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "archiver",
+    "axios",
+    "dotenv",
+    "rollup",
+    "vitest"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    ".git",
+    "dist",
+    "build",
+    "*.lock"
+  ],
+  "overrides": [
+    {
+      "filename": "**/*.md",
+      "language": "en"
+    }
+  ]
+}
