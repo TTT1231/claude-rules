@@ -55,9 +55,8 @@
    "explorer.fileNesting.expand": false, // 默认折叠嵌套文件（不展开）
    "explorer.fileNesting.patterns": {
       //file fold
-      "README.md": "cspell.json,.prettierignore,.prettierrc,.prettierrc.json"
+      "package.json": "cspell.json,.prettierignore,.prettierrc,.prettierrc.json,.gitignore,pnpm-lock.yaml,yarn.lock,tsconfig.json,tsconfig.*.json,jsconfig.json,README.md"
    },
    // 拼写检查
-   "cSpell.words": ["archiver", "axios", "dotenv", "rollup", "vitest"],
-   "kiroAgent.configureMCP": "Disabled"
+   "cSpell.words": ["archiver", "axios", "dotenv", "rollup", "vitest"]
 }

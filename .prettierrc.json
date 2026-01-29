@@ -1,10 +1,10 @@
 {
-  "tabWidth": 3,
-  "useTabs": false,
-  "semi": false,
-  "singleQuote": true,
-  "trailingComma": "none",
-  "printWidth": 100,
-  "endOfLine": "lf",
-  "proseWrap": "preserve"
+   "tabWidth": 3,
+   "useTabs": false,
+   "semi": false,
+   "singleQuote": true,
+   "trailingComma": "none",
+   "printWidth": 100,
+   "endOfLine": "lf",
+   "proseWrap": "preserve"
 }
