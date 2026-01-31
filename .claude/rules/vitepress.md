@@ -1,3 +1,8 @@
+---
+paths:
+   - 'docs/.vitepress/config.{mts,mjs,ts}'
+---
+
 # VitePress 文档项目配置
 
 ```ts
