@@ -1,7 +1,8 @@
 ---
 paths:
-   - '**/*.ts'
-   - '**/*.vue'
+   - 'src/api/**/*.ts'
+   - 'src/utils/request/**/*.ts'
+   - 'packages/effects/request/**/*.ts' # monorepo路径
 ---
 
 # 前端网络请求规范

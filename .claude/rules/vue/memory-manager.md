@@ -1,11 +1,15 @@
 ---
 paths:
    - '**/*.vue' # Vue 组件
-   - '**/*.ts' # TypeScript
-   - '**/*.js' # JavaScript
 ---
 
 # 内存管理
+
+## 适用范围
+
+**Vue 组件**：包括 `<template>`、`<script lang="ts">`、`<script lang="js">`
+
+---
 
 ## 数据结构选择
 
