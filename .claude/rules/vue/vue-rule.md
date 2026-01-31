@@ -464,67 +464,8 @@ import Menu from '@/components/Menu/src/Menu.vue'
 
 ---
 
-## 前端 API 请求规范
+## 网络请求
 
-### 核心规则
-
-| 规则类型 | 说明                                 |
-| -------- | ------------------------------------ |
-| **必须** | 可复用的请求逻辑放在 `src/api/` 目录 |
-| **必须** | composables 调用 api 层而非直接请求  |
-| **建议** | 组件中通过 api 层或 composables 请求 |
-| **允许** | 组件中一次性简单请求（非推荐）       |
-
-> **决策依据**：简单的一次性请求可以直接写在组件中，但任何可能复用、包含复杂逻辑（重试、缓存、转换）的请求必须放在 api 层。
-
-### 代码示例
-
-```ts
-// ⚠️ 允许但不推荐：组件中一次性简单请求
-<script setup lang="ts">
-import { request } from '@/utils/request'
-const data = await request.get('/api/user')
-</script>
-
-// ✅ 推荐：通过 api 层（便于复用、测试、维护）
-<script setup lang="ts">
-import { getUserInfo } from '@/api/user'
-const data = await getUserInfo()
-</script>
-
-// ❌ 禁止：composables 中直接请求（必须调用 api 层）
-import { request } from '@/utils/request'
-export function useUser() {
-   request.get('/api/user').then(...)
-}
-
-// ✅ 正确：composables 调用 api 层
-import { getUserInfo } from '@/api/user'
-export function useUser() {
-   getUserInfo().then(...)
-}
-```
-
-### API 层示例
-
-```ts
-// src/api/user/types.ts
-export interface IUser {
-   id: string
-   name: string
-}
-
-export interface GetUserParams {
-   id: string
-}
-
-// src/api/user/index.ts
-import { request } from '@/utils/request'
-import type { IUser, GetUserParams } from './types'
-
-export function getUserInfo(params: GetUserParams): Promise<IUser> {
-   return request.get('/user/info', { params })
-}
-```
+网络请求规范详见 `request-rule.md`。
 
 ---
