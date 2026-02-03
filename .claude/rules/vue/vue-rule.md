@@ -414,9 +414,42 @@ export function useCounter() {
 
 ## 多文件组件
 
-### 拆分标准
+### Vue 特定的多文件组件约定
 
-**唯一标准：复杂度**
+当使用多文件组件时，Vue 组件应遵循以下约定：
+
+| 要求   | 说明                             |
+| ------ | -------------------------------- |
+| 主组件 | 必须在 `src/` 目录下，默认导出   |
+| 模板   | 所有 `.vue` 文件必须 `lang="ts"` |
+| 样式   | 所有 `<style>` 必须加 `scoped`   |
+
+```
+Menu/
+├── src/
+│   ├── Menu.vue           # 主组件
+│   ├── MenuItem.vue       # 子组件
+│   ├── types.ts           # 类型定义
+│   └── constants.ts       # 常量
+└── index.ts               # 桶文件：export { default as Menu } from './src/Menu.vue'
+```
+
+```vue
+<!-- ✅ 正确：多文件组件中的 Vue 文件 -->
+<script setup lang="ts">
+// 组件名优先使用文件名
+</script>
+
+<template>
+   <!-- 内容 -->
+</template>
+
+<style lang="scss" scoped>
+/* 样式 */
+</style>
+```
+
+### 拆分标准
 
 | 条件         | 说明                     | 示例                         |
 | ------------ | ------------------------ | ---------------------------- |
@@ -425,47 +458,6 @@ export function useCounter() {
 | **复用需求** | 子逻辑可能被其他地方复用 | 弹窗、表单项、列表项         |
 | **类型导出** | 需要导出类型供外部使用   | 复杂的 Props/Emits 类型      |
 
-> **行数不是拆分依据**：一个 200 行但逻辑复杂的组件应该拆分，而一个 600 行但结构简单的列表组件可以保留。
-
-### 单文件 vs 多文件选择
-
-| 场景                                               | 推荐方式 | 目录结构                               | 导入方式                                           |
-| -------------------------------------------------- | -------- | -------------------------------------- | -------------------------------------------------- |
-| 简单组件（单一职责、浅层嵌套、无复用子组件）       | 单文件   | `components/UserCard.vue`              | `import UserCard from '@/components/UserCard.vue'` |
-| 复杂组件（多职责、深层嵌套、有子组件、需导出类型） | 多文件   | `components/Menu/src/...` + `index.ts` | `import { Menu } from '@/components/Menu'`         |
-
-### 目录结构（使用 Barrel Pattern）
-
-```
-Menu/
-├── src/
-│   ├── Menu.vue           # 主组件（必须默认导出）
-│   ├── MenuItem.vue       # 子组件
-│   ├── types.ts           # 类型定义
-│   └── constants.ts       # 常量
-└── index.ts               # 桶文件
-```
-
-```ts
-// Menu/index.ts
-export { default as Menu } from './src/Menu.vue'
-export { default as MenuItem } from './src/MenuItem.vue'
-export * from './src/types'
-export * from './src/constants'
-
-// 使用
-import { Menu, MenuItem, IMenu } from '@/components/Menu'
-
-// ❌ 避免：深层导入
-import Menu from '@/components/Menu/src/Menu.vue'
-```
-
-**说明**：单文件组件允许直接导入，多文件组件（有 `src/` 目录）应通过桶文件导入。
-
 ---
-
-## 网络请求
-
-网络请求规范详见 `request-rule.md`。
 
 ---
