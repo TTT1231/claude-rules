@@ -27,55 +27,10 @@
 
 ---
 
-## 具体配置
+## web-vue插件配置注意事项
 
-### unplugin-vue-components配置
+### unplugin-vue-components配置注意事项
 
-```ts
-// vite.config.ts
-import Components from 'unplugin-vue-components/vite'
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
-// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-
-export default {
-   plugins: [
-      Components({
-         resolvers: [
-            AntDesignVueResolver({ importStyle: false })
-            // ElementPlusResolver(),
-         ]
-      })
-   ]
-}
-```
-
-```gitignore
-# 自动生成的类型声明
-components.d.ts
-```
-
-**TypeScript 配置**：需要在 `tsconfig.app.json` 中添加类型声明
-
-```json
-// tsconfig.app.json
-{
-   "compilerOptions": {
-      "types": [
-         "ant-design-vue/typings/global.d.ts"
-         // "element-plus/global"
-      ]
-   }
-}
-```
-
-**说明**：添加后组件类型才能被识别（如 `AButton`、`AMenu` 等带前缀的类型）
-
-### stylelint配置参考
-
-[配置参考文档](https://ttt1231.github.io/Turw-docs/code-style/eslint-format.html#%E9%85%8D%E7%BD%AE-stylelint)
-
-### env验证
-
-**参考文档**：[env 配置验证注意](https://ttt1231.github.io/Turw-docs/frontdesign/Vite.html#env%E9%85%8D%E7%BD%AE%E9%AA%8C%E8%AF%81%E6%B3%A8%E6%84%8F)
+当它被配置的时候，注意它会自动在根目录生成一个`components.d.ts`文件，需要将它加入到Git中，同时如果启用了组件库，需要开启对这个插件对组件库类型的支持，也就是在`tsconfig`配置文件中添加类型声明即可:`ant-design-vue/typings/global.d.ts`或者`element-plus/global`，添加后组件类型才能被识别（如 `AButton`、`AMenu` 等带前缀的类型）。
 
 ---
