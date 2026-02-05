@@ -3,9 +3,9 @@ paths:
    - '**/*.vue'
 ---
 
-# Vue 规范
+# Vue Standards
 
-## 文件模板
+## File Template
 
 ```vue
 <script setup lang="ts"></script>
@@ -15,12 +15,12 @@ paths:
 <style lang="scss" scoped></style>
 ```
 
-## 禁止事项
+## Prohibitions
 
-| 行为                              | 说明                       |
-| --------------------------------- | -------------------------- |
-| `<script setup>` 不加 `lang="ts"` | TS 项目必须                |
-| 缺少 `<style lang="scss" scoped>` | 非 Tailwind 项目必须       |
-| Composables 命名非 `useXxx`       | 必须前缀 `use`             |
-| Props/Emits 无类型定义            | TS 项目必须类型安全        |
-| 静态内联样式                      | `<div style="color: red">` |
+| Practice                              | Explanation                       |
+| ------------------------------------- | --------------------------------- |
+| `<script setup>` without `lang="ts"`  | Required for TS projects          |
+| Missing `<style lang="scss" scoped>`  | Required for non-Tailwind projects |
+| Composables not named `useXxx`        | Must use `use` prefix             |
+| Props/Emits without type definitions  | TS projects must be type-safe     |
+| Static inline styles                  | `<div style="color: red">`        |
