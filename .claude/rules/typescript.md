@@ -4,13 +4,13 @@ paths:
    - '**/*.d.ts'
 ---
 
-# TypeScript 规范
+# TypeScript Standards
 
-## 禁止事项
+## Prohibitions
 
-| 行为                       | 说明                     |
-| -------------------------- | ------------------------ |
-| 使用 `any`                 | 用 `unknown` 代替        |
-| 同一标识符混合导出         | `export` + `export type` |
-| 无理由使用 `!` 非空断言    | 用 `?.` 可选链代替       |
-| 对象类型用 `type`          | 用 `interface`           |
+| Practice                   | Explanation                     |
+| -------------------------- | ------------------------------- |
+| Using `any`                | Use `unknown` instead           |
+| Mixed exports of same identifier | `export` + `export type` |
+| Non-null assertions `!` without justification | Use optional chaining `?.` instead |
+| Using `type` for object types | Use `interface` instead        |
