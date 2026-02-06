@@ -1,28 +1,28 @@
-# API Standards
+# API 规范
 
-## Response Format
+## 响应格式
 
 ```typescript
 interface ApiResponse<T> {
-   code: number // HTTP status code
+   code: number // HTTP 状态码
    data: T
    message: string
    timestamp: number
 }
 ```
 
-## File Organization
+## 文件组织
 
-| Project Type | API File Location        |
-| ------------ | ------------------------ |
-| Vue Monolith | `src/api/`               |
-| Monorepo     | `apps/[project-name]/api/` |
+| 项目类型 | API 文件位置         |
+| -------- | -------------------- |
+| Vue 单体 | `src/api/`           |
+| Monorepo | `apps/[项目名]/api/` |
 
-## URL Rules
+## URL 规则
 
-| Rule           | Correct          | Incorrect        |
-| -------------- | ---------------- | ---------------- |
-| Plural nouns   | `/users`         | `/user`          |
-| Lowercase + hyphen | `/user-profiles` | `/userProfiles` |
-| Max 3 levels   | `/users/1/posts` | `/a/b/c/d`       |
-| Version prefix | `/api/v1/users`  | `/api/users`     |
+| 规则        | 正确             | 错误            |
+| ----------- | ---------------- | --------------- |
+| 名词复数    | `/users`         | `/user`         |
+| 小写+连字符 | `/user-profiles` | `/userProfiles` |
+| 不超过 3 层 | `/users/1/posts` | `/a/b/c/d`      |
+| 版本前缀    | `/api/v1/users`  | `/api/users`    |
