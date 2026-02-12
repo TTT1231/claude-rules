@@ -5,7 +5,6 @@ argument-hint: '描述需求 或 /vue <path>'
 user-invocable: true
 paths:
    - '**/*.vue'
-   - '**/composables/**/*.ts'
 ---
 
 # Vue 组件开发技能
