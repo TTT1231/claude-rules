@@ -26,11 +26,3 @@
 | 静态文档类项目 | vitepress                                 | 其他文档类框架             |
 
 ---
-
-## web-vue插件配置注意事项
-
-### unplugin-vue-components配置注意事项
-
-当它被配置的时候，注意它会自动在根目录生成一个`components.d.ts`文件，需要将它加入到Git中，同时如果启用了组件库，需要开启对这个插件对组件库类型的支持，也就是在`tsconfig`配置文件中添加类型声明即可:`ant-design-vue/typings/global.d.ts`或者`element-plus/global`，添加后组件类型才能被识别（如 `AButton`、`AMenu` 等带前缀的类型）。
-
----

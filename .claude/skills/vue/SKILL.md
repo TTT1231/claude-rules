@@ -125,3 +125,4 @@ paths:
 - `references/composable-rules.md` — Composable 编写规则
 - `references/modern-features.md` — Vue 3.3+ / 3.5+ 新特性
 - `references/review-checklist.md` — 详细的审查清单
+- `references/project-setup.md` — Vue Web 项目配置（unplugin-vue-components 等）
