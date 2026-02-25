@@ -105,3 +105,131 @@ const apiUrl = import.meta.env.VITE_API_BASE_URL
 ```
 
 > 注意：Vite 环境变量必须以 `VITE_` 开头才能暴露给客户端代码。
+
+---
+
+## 状态管理 (Pinia)
+
+推荐使用 Setup Store 语法（类似 Composition API）。
+
+```typescript
+// stores/user.ts
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
+export const useUserStore = defineStore('user', () => {
+   // State
+   const userInfo = ref<User | null>(null)
+   const token = ref<string>('')
+
+   // Getters
+   const isLoggedIn = computed(() => !!token.value)
+
+   // Actions
+   const login = async (credentials: LoginDto) => {
+      const res = await apiLogin(credentials)
+      token.value = res.token
+      userInfo.value = res.user
+   }
+
+   const logout = () => {
+      token.value = ''
+      userInfo.value = null
+   }
+
+   return { userInfo, token, isLoggedIn, login, logout }
+})
+```
+
+---
+
+## 路由配置 (Vue Router)
+
+推荐使用路由懒加载（Lazy Loading）以优化首屏加载速度。
+
+```typescript
+// router/index.ts
+import { createRouter, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+   history: createWebHistory(import.meta.env.BASE_URL),
+   routes: [
+      {
+         path: '/',
+         name: 'home',
+         component: () => import('@/views/HomeView.vue') // ✅ 路由懒加载
+      },
+      {
+         path: '/about',
+         name: 'about',
+         component: () => import('@/views/AboutView.vue')
+      }
+   ]
+})
+
+// 路由守卫示例
+router.beforeEach((to, from, next) => {
+   const userStore = useUserStore()
+   if (to.meta.requiresAuth && !userStore.isLoggedIn) {
+      next({ name: 'login', query: { redirect: to.fullPath } })
+   } else {
+      next()
+   }
+})
+
+export default router
+```
+
+---
+
+## API 请求封装 (Axios)
+
+统一封装 Axios 实例，处理请求拦截、响应拦截和错误提示。
+
+```typescript
+// utils/request.ts
+import axios from 'axios'
+import { useUserStore } from '@/stores/user'
+import { ElMessage } from 'element-plus'
+
+const request = axios.create({
+   baseURL: import.meta.env.VITE_API_BASE_URL,
+   timeout: 10000
+})
+
+// 请求拦截器
+request.interceptors.request.use(
+   (config) => {
+      const userStore = useUserStore()
+      if (userStore.token) {
+         config.headers.Authorization = `Bearer ${userStore.token}`
+      }
+      return config
+   },
+   (error) => Promise.reject(error)
+)
+
+// 响应拦截器
+request.interceptors.response.use(
+   (response) => {
+      const res = response.data
+      // 根据后端约定的状态码判断
+      if (res.code !== 200) {
+         ElMessage.error(res.message || '请求失败')
+         return Promise.reject(new Error(res.message || 'Error'))
+      }
+      return res.data
+   },
+   (error) => {
+      if (error.response?.status === 401) {
+         const userStore = useUserStore()
+         userStore.logout()
+         // 跳转登录页...
+      }
+      ElMessage.error(error.message || '网络错误')
+      return Promise.reject(error)
+   }
+)
+
+export default request
+```

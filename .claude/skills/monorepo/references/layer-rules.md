@@ -152,6 +152,49 @@ import { API_CODES } from '@myproject/constants' // ✅ 语义合理：常量前
 
 ---
 
+## 样式与静态资源共享规则
+
+在 Monorepo 中共享 CSS/SCSS 变量、Mixins 或静态资源（图片、字体）时，应遵循以下规则：
+
+### 1. 样式包 (packages/styles)
+
+创建一个专门的样式包，用于存放全局 CSS 变量、SCSS Mixins 和基础样式重置。
+
+**特征**：
+
+- 纯 CSS/SCSS 文件，无 JS 逻辑
+- 通过 `exports` 暴露样式文件
+
+```json
+// packages/styles/package.json
+{
+   "name": "@myproject/styles",
+   "exports": {
+      "./variables.scss": "./src/variables.scss",
+      "./mixins.scss": "./src/mixins.scss",
+      "./reset.css": "./src/reset.css"
+   }
+}
+```
+
+**引用方式**：
+
+```scss
+// apps/vue-web/src/App.vue
+@use '@myproject/styles/variables.scss' as *;
+```
+
+### 2. 静态资源共享
+
+静态资源（如 Logo、图标）不建议放在单独的包中通过 npm 依赖引入，因为构建工具（如 Vite）处理 `node_modules` 中的静态资源路径时可能会遇到问题。
+
+**推荐方案**：
+
+1. **小图标/SVG**：封装为 Vue 组件（放在 `packages/components` 中）。
+2. **大文件/图片**：放在各自应用的 `public/` 或 `src/assets/` 目录下。如果必须共享，可以创建一个 `packages/assets` 包，并在应用的构建配置中配置别名或复制插件将其复制到应用的 `public/` 目录。
+
+---
+
 ## 诊断时的检查方法
 
 ### 检查 1：层级违规

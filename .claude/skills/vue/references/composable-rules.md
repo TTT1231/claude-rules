@@ -111,3 +111,57 @@ export function useApiCall() {
    return { loading, error, execute }
 }
 ```
+
+---
+
+## 副作用清理 (Side-effect Cleanup)
+
+在 Composable 中注册的事件监听器、定时器等副作用，必须在组件卸载时清理。
+
+```typescript
+import { onMounted, onUnmounted } from 'vue'
+
+export function useWindowResize() {
+   const width = ref(window.innerWidth)
+   const height = ref(window.innerHeight)
+
+   const handleResize = () => {
+      width.value = window.innerWidth
+      height.value = window.innerHeight
+   }
+
+   onMounted(() => {
+      window.addEventListener('resize', handleResize)
+   })
+
+   // ✅ 必须清理副作用
+   onUnmounted(() => {
+      window.removeEventListener('resize', handleResize)
+   })
+
+   return { width, height }
+}
+```
+
+---
+
+## 状态共享 (State Sharing)
+
+Composable 默认每次调用都会创建新的状态。如果需要在多个组件间共享状态，可以将状态定义在函数外部。
+
+```typescript
+import { ref } from 'vue'
+
+// ✅ 状态定义在外部，实现全局共享（类似简易 Pinia）
+const sharedState = ref(0)
+
+export function useSharedCounter() {
+   const increment = () => {
+      sharedState.value++
+   }
+
+   return { count: sharedState, increment }
+}
+```
+
+> **注意**：对于复杂的全局状态管理，优先使用 Pinia。这种模式仅适用于简单的状态共享。

@@ -77,6 +77,7 @@ internal/      → 工程工具层：项目级配置和工具，private: true，
    - 各子包 `package.json`（参照 `references/package-templates.md`）
    - 共享配置包（tsconfig / eslint-config 等）
    - 各应用的构建配置
+   - 版本发布与 Changelog 配置（Changesets）
 
 **技术选型映射**（快速参考，完整版见 `references/tech-stack-map.md`）：
 
@@ -253,3 +254,4 @@ catalog:
 - `references/tech-stack-map.md` — 应用类型与技术选型映射表
 - `references/build-tool-guide.md` — unbuild / tsup / vite 选型指南
 - `references/package-templates.md` — 各类型包的 package.json / 构建配置模板
+- `references/publish-workflow.md` — 版本发布与 Changelog 工作流 (Changesets)

@@ -93,6 +93,28 @@ paths:
 
 ---
 
+## 代码生成规范 (AI 必须遵守)
+
+1. **语法标准**：
+   - 必须使用 `<script setup lang="ts">`
+   - 优先使用 `const` 声明变量
+   - 必须使用 `async/await` 处理异步操作，并包裹在 `try/catch` 中
+   - 优先使用 Vue 3.5+ 新特性（如 `useTemplateRef`, `useId`, `defineModel`）
+2. **类型定义**：
+   - 必须为所有 Props、Emits、Refs 提供明确的 TypeScript 类型
+   - 避免使用 `any`，优先使用 `unknown` 或具体类型
+   - 复杂类型定义应提取到单独的 `types.ts` 文件中
+3. **状态管理**：
+   - 局部状态使用 `ref` 或 `reactive`
+   - 跨组件状态优先使用 `Provide/Inject`
+   - 全局状态使用 Pinia
+4. **性能优化**：
+   - 列表渲染必须提供唯一的 `:key`
+   - 频繁更新的非响应式数据不要使用 `ref`
+   - 庞大的只读数据使用 `shallowRef`
+
+---
+
 ## 审查输出格式
 
 ```markdown
@@ -120,9 +142,10 @@ paths:
 
 详细规则位于 `references/` 目录：
 
-- `references/component-types.md` — 组件分类、大组件拆分规则
-- `references/wrapper-pattern.md` — 二次封装完整指南
-- `references/composable-rules.md` — Composable 编写规则
+- `references/component-types.md` — 组件分类、大组件拆分规则、Props/Emits、Provide/Inject
+- `references/wrapper-pattern.md` — 二次封装完整指南、v-model 处理、动态插槽
+- `references/composable-rules.md` — Composable 编写规则、副作用清理、状态共享
 - `references/modern-features.md` — Vue 3.3+ / 3.5+ 新特性
 - `references/review-checklist.md` — 详细的审查清单
-- `references/project-setup.md` — Vue Web 项目配置（unplugin-vue-components 等）
+- `references/project-setup.md` — Vue Web 项目配置（Pinia, Router, Axios, unplugin 等）
+- `references/performance-optimization.md` — 性能优化指南（shallowRef, v-memo, 虚拟滚动等）
